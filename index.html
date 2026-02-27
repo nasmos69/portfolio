@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Recherche de Stage Informatique</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #1E060C;
+            background: linear-gradient(135deg, #1E060C 0%, #511020 50%, #1E060C 100%);
+            background-attachment: fixed;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: #050102;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(81, 16, 32, 0.2) 0%, transparent 70%);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(30, 6, 12, 0.3) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite reverse;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            padding: 40px;
+        }
+
+        .hero h1 {
+            font-size: 5em;
+            color: #FFFFFF;
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: -2px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h2 {
+            font-size: 1.5em;
+            color: #EDA5B7;
+            font-weight: 300;
+            margin-bottom: 15px;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease-out 0.4s both;
+            background: linear-gradient(90deg, #EDA5B7, #1E060C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .hero-links a {
+            color: #F7D8E0;
+            text-decoration: none;
+            padding: 15px 30px;
+            border: 2px solid #EDA5B7;
+            border-radius: 50px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .hero-links a:hover {
+            background: #EDA5B7;
+            color: #1E060C;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(237, 165, 183, 0.4);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: float 2s ease-in-out infinite;
+        }
+
+        .scroll-indicator span {
+            display: block;
+            width: 30px;
+            height: 50px;
+            border: 2px solid #EDA5B7;
+            border-radius: 25px;
+            position: relative;
+        }
+
+        .scroll-indicator span::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 10px;
+            background: #EDA5B7;
+            border-radius: 3px;
+            animation: scrollDown 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollDown {
+            0%, 100% { opacity: 1; top: 8px; }
+            50% { opacity: 0.5; top: 20px; }
+        }
+
+        nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: rgba(30, 6, 12, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 5px;
+            box-shadow: 0 10px 40px rgba(30, 6, 12, 0.5);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            padding: 10px 20px;
+            gap: 5px;
+        }
+
+        nav ul li {
+            margin: 0;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #F7D8E0;
+            font-weight: 500;
+            font-size: 0.9em;
+            transition: all 0.3s;
+            padding: 10px 20px;
+            border-radius: 25px;
+            display: block;
+        }
+
+        nav ul li a:hover {
+            color: #1E060C;
+            background: #EDA5B7;
+        }
+
+        .main-content {
+            background: #FFFFFF;
+            position: relative;
+        }
+
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        section:nth-child(even) {
+            background: linear-gradient(135deg, #F7D8E0 0%, #FFFFFF 100%);
+        }
+
+        section:nth-child(odd) {
+            background: #FFFFFF;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 3em;
+            color: #1E060C;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .section-header p {
+            color: #511020;
+            font-size: 1.2em;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .section-header .line {
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #511020, #EDA5B7);
+            margin: 20px auto 0;
+            border-radius: 2px;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-size: 2em;
+            color: #1E060C;
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            font-size: 1.1em;
+            line-height: 1.9;
+            color: #511020;
+            margin-bottom: 20px;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .about-stats .stat-card:last-child {
+            grid-column: 1 / -1;
+            justify-self: center;
+            width: min(360px, 100%);
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #511020 0%, #1E060C 100%);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(81, 16, 32, 0.4);
+        }
+
+        .stat-card .number {
+            font-size: 3em;
+            color: #EDA5B7;
+            font-weight: 700;
+            display: block;
+        }
+
+        .stat-card .label {
+            color: #F7D8E0;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .skills-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .skill-row {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 40px;
+            align-items: center;
+            padding: 40px;
+            background: #FFFFFF;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(30, 6, 12, 0.1);
+            transition: all 0.3s;
+        }
+
+        .skill-row:hover {
+            transform: translateX(10px);
+            box-shadow: 0 15px 50px rgba(81, 16, 32, 0.2);
+        }
+
+        .skill-row h3 {
+            color: #511020;
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .skill-tag {
+            background: linear-gradient(135deg, #F7D8E0 0%, #FFFFFF 100%);
+            color: #511020;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 500;
+            border: 2px solid #EDA5B7;
+            transition: all 0.3s;
+        }
+
+        .skill-tag:hover {
+            background: linear-gradient(135deg, #511020 0%, #1E060C 100%);
+            color: #F7D8E0;
+            border-color: #511020;
+            transform: scale(1.1);
+        }
+
+        .projects-showcase {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 30px;
+        }
+
+        .project-card {
+            background: #FFFFFF;
+            border-radius: 25px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 40px rgba(30, 6, 12, 0.1);
+        }
+
+        .project-card:nth-child(1) {
+            grid-column: span 7;
+        }
+
+        .project-card:nth-child(2) {
+            grid-column: span 5;
+        }
+
+        .project-card:nth-child(3) {
+            grid-column: span 12;
+        }
+
+        .project-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 60px rgba(81, 16, 32, 0.25);
+        }
+
+        .project-header {
+            background: linear-gradient(135deg, #511020 0%, #1E060C 100%);
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(237, 165, 183, 0.3) 0%, transparent 70%);
+        }
+
+        .project-header h3 {
+            color: #FFFFFF;
+            font-size: 1.8em;
+            position: relative;
+            z-index: 1;
+        }
+
+        .project-body {
+            padding: 30px;
+        }
+
+        .project-body p {
+            color: #511020;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tech-tag {
+            background: linear-gradient(135deg, #F7D8E0 0%, #FFFFFF 100%);
+            color: #511020;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            border: 1px solid #EDA5B7;
+            transition: all 0.3s;
+        }
+
+        .tech-tag:hover {
+            background: #511020;
+            color: #F7D8E0;
+            border-color: #511020;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, #511020, #EDA5B7);
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 50%;
+            position: relative;
+            margin-bottom: 50px;
+        }
+
+        .timeline-item:nth-child(even) {
+            justify-content: flex-start;
+            padding-right: 0;
+            padding-left: 50%;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: #EDA5B7;
+            border: 4px solid #511020;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .timeline-content {
+            background: #FFFFFF;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(30, 6, 12, 0.15);
+            max-width: 350px;
+            margin-right: 40px;
+            transition: all 0.3s;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-right: 0;
+            margin-left: 40px;
+        }
+
+        .timeline-content:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 50px rgba(81, 16, 32, 0.25);
+        }
+
+        .timeline-content h3 {
+            color: #1E060C;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .timeline-content .date {
+            color: #EDA5B7;
+            font-weight: 700;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .timeline-content p {
+            color: #511020;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .contact-info-section h3 {
+            font-size: 2em;
+            color: #1E060C;
+            margin-bottom: 30px;
+        }
+
+        .contact-info-section p {
+            color: #511020;
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background: #FFFFFF;
+            border-radius: 15px;
+            text-decoration: none;
+            color: #511020;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(30, 6, 12, 0.1);
+        }
+
+        .contact-link:hover {
+            background: linear-gradient(135deg, #511020 0%, #1E060C 100%);
+            color: #F7D8E0;
+            transform: translateX(10px);
+        }
+
+        .contact-link .icon {
+            font-size: 1.5em;
+        }
+
+        .contact-form {
+            background: #FFFFFF;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 15px 50px rgba(30, 6, 12, 0.15);
+        }
+
+        .contact-form h3 {
+            color: #1E060C;
+            margin-bottom: 30px;
+            font-size: 1.5em;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #511020;
+            font-weight: 600;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #F7D8E0;
+            border-radius: 12px;
+            font-size: 1em;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: all 0.3s;
+            background: #FAFAFA;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #511020;
+            background: #FFFFFF;
+            box-shadow: 0 0 0 4px rgba(81, 16, 32, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .form-group .required {
+            color: #EDA5B7;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #511020 0%, #1E060C 100%);
+            color: #F7D8E0;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #EDA5B7 0%, #F7D8E0 100%);
+            color: #1E060C;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(81, 16, 32, 0.3);
+        }
+
+        footer {
+            background: linear-gradient(135deg, #1E060C 0%, #511020 100%);
+            text-align: center;
+            padding: 60px 0;
+            color: #F7D8E0;
+        }
+
+        footer p {
+            margin: 8px 0;
+        }
+
+        footer a {
+            color: #EDA5B7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: #FFFFFF;
+        }
+
+        @media (max-width: 1024px) {
+            .about-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .projects-showcase .project-card {
+                grid-column: span 12 !important;
+            }
+
+            .skill-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3em;
+            }
+
+            .hero h2 {
+                font-size: 1.2em;
+            }
+
+            nav {
+                top: 10px;
+                left: 10px;
+                right: 10px;
+                transform: none;
+                border-radius: 20px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                padding: 10px;
+            }
+
+            nav ul li a {
+                padding: 8px 15px;
+                font-size: 0.8em;
+            }
+
+            section {
+                padding: 60px 20px;
+            }
+
+            .section-header h2 {
+                font-size: 2em;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                padding-right: 0;
+                padding-left: 50px;
+                justify-content: flex-start;
+            }
+
+            .timeline-item:nth-child(even) {
+                padding-left: 50px;
+            }
+
+            .timeline-item::before {
+                left: 20px;
+            }
+
+            .timeline-content,
+            .timeline-item:nth-child(even) .timeline-content {
+                margin-left: 0;
+                margin-right: 0;
+                max-width: 100%;
+            }
+
+            .about-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 0 20px;
+            }
+            .custom{
+                color: #1E060C;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#about">À Propos</a></li>
+            <li><a href="#skills">Compétences</a></li>
+            <li><a href="#projects">Projets</a></li>
+            <li><a href="#education">Formation</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Nasmos</h1>
+            <h2>Étudiant en Informatique à l'ESGI Lyon</h2>
+            <p class="custom">Passionné par l'informatique, la photographie et l'automobile | Recherche stage et alternance dans le domaine informatique</p>
+            <div class="hero-links">
+                <a href="https://github.com/nasmos69" target="_blank">💻 GitHub</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span></span>
+        </div>
+    </section>
+
+    <div class="main-content">
+        <section id="about">
+            <div class="container">
+                <div class="section-header">
+                    <h2>À Propos de Moi</h2>
+                    <div class="line"></div>
+                </div>
+                <div class="about-grid">
+                    <div class="about-text">
+                        <h3>Administrateur système et réseau en devenir</h3>
+                        <p>
+                            Étudiant passionné en informatique, je suis à la recherche d'un stage pour mettre en pratique
+                            mes connaissances et développer mes compétences dans un environnement professionnel.
+                        </p>
+                        <p>
+                            Motivé, curieux et rigoureux, j'aime relever des défis techniques et apprendre constamment
+                            de nouvelles choses. Je souhaite contribuer à des projets innovants tout en développant
+                            mon expertise.
+                        </p>
+                    </div>
+                    <div class="about-stats">
+                        <div class="stat-card">
+                            <span class="number">3+</span>
+                            <span class="label">Projets réalisés</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="number">6+</span>
+                            <span class="label">Langages utilisés</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="number">2028</span>
+                            <span class="label">Diplôme prévu</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Compétences</h2>
+                    <p>Les technologies et outils que j'utilise</p>
+                    <div class="line"></div>
+                </div>
+                <div class="skills-container">
+                    <div class="skill-row">
+                        <h3>💻 Langages</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">C</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">HTML</span>
+                            <span class="skill-tag">CSS</span>
+                        </div>
+                    </div>
+                    <div class="skill-row">
+                        <h3>🛠️ Outils</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">GitHub</span>
+                            <span class="skill-tag">VS Code</span>
+                            <span class="skill-tag">Linux</span>
+                            <span class="skill-tag">Windows</span>
+                            <span class="skill-tag">SQL</span>
+                        </div>
+                    </div>
+                    <div class="skill-row">
+                        <h3>🎯 Soft Skills</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Travail en équipe</span>
+                            <span class="skill-tag">Résolution de problèmes</span>
+                            <span class="skill-tag">Autonomie</span>
+                            <span class="skill-tag">Curiosité</span>
+                            <span class="skill-tag">Gestion du temps</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Mes Projets</h2>
+                    <p>Découvrez ce que j'ai réalisé</p>
+                    <div class="line"></div>
+                </div>
+                <div class="projects-showcase">
+                    <div class="project-card">
+                        <div class="project-header">
+                            <h3>🤖 Bot Discord Python</h3>
+                        </div>
+                        <div class="project-body">
+                            <p>
+                                Développement de plusieurs bots d'automatisation en Python pour le réseau social Discord.
+                                Gestion des messages, modération automatique et interactions avec les utilisateurs.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Discord API</span>
+                                <span class="tech-tag">Automatisation</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-header">
+                            <h3>📊 Programmes en C</h3>
+                        </div>
+                        <div class="project-body">
+                            <p>
+                                Réalisation de programmes en langage C : calculs, algorithmes et structures de données.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">C</span>
+                                <span class="tech-tag">Algorithmes</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-header">
+                            <h3>🌐 Portfolio Web</h3>
+                        </div>
+                        <div class="project-body">
+                            <p>
+                                Création d'un portfolio personnel moderne et responsive pour présenter mes compétences
+                                et projets dans le cadre de ma recherche de stage et d'alternance. Design épuré avec animations CSS avancées.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">HTML</span>
+                                <span class="tech-tag">CSS</span>
+                                <span class="tech-tag">Responsive Design</span>
+                                <span class="tech-tag">Animations</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="education">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Formation</h2>
+                    <p>Mon parcours académique</p>
+                    <div class="line"></div>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="date">2025 - 2028</div>
+                            <h3>Bachelor Informatique</h3>
+                            <p>ESGI Lyon</p>
+                            <p>Formation en algorithmique, bases de données, réseaux, développement et systèmes d'exploitation.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="date">2025</div>
+                            <h3>Baccalauréat</h3>
+                            <p>Spécialité Mathématiques / NSI</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Contact</h2>
+                    <p>Discutons de votre projet ou d'une opportunité</p>
+                    <div class="line"></div>
+                </div>
+                <div class="contact-grid">
+                    <div class="contact-info-section">
+                        <h3>Travaillons ensemble</h3>
+                        <p>
+                            Je suis actuellement à la recherche d'un stage en développement informatique,
+                            ainsi qu'une alternance à partir de septembre 2026.
+                            N'hésitez pas à me contacter pour discuter d'opportunités !
+                        </p>
+                        <div class="contact-links">
+                            <a href="https://github.com/nasmos69" target="_blank" class="contact-link">
+                                <span class="icon">💻</span>
+                                <span>nasmos69</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="contact-form">
+                        <h3>📝 Envoyez-moi un message</h3>
+                        <form action="https://formspree.io/f/mlgdvqeg" method="POST">
+                            <div class="form-group">
+                                <label for="nom">NOM Prénom <span class="required">*</span></label>
+                                <input type="text" id="nom" name="nom" required placeholder="Votre nom et prénom">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email <span class="required">*</span></label>
+                                <input type="email" id="email" name="email" required placeholder="votre.email@exemple.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="entreprise">Entreprise / Organisation</label>
+                                <input type="text" id="entreprise" name="entreprise" placeholder="Nom de votre entreprise">
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message <span class="required">*</span></label>
+                                <textarea id="message" name="message" required placeholder="Parlez-moi de l'opportunité..."></textarea>
+                            </div>
+                            <button type="submit" class="submit-btn">Envoyer</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>BG</p>
+            <p>Disponible pour un stage à partir de juin 2025 | Recherche alternance pour septembre 2026</p>
+        </div>
+    </footer>
+</body>
+
+</html>
